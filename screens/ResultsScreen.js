@@ -5,42 +5,26 @@ import EmptyList from '../components/EmptyList'
 
 const ResultsScreen = ({route, navigation}) => {
 
-    const[result, setResult] = useState([
-        {
-            "id":"0",
-            "news": "parv gando che",
-            "authenticity": false,
-            "dateAdded": "20 March 2020",
-            "score": 0.6666666666666666
-        }, 
-        {
-            "id":"1",
-            "news": "shivam gando che",
-            "authenticity": true, 
-            "dateAdded": "20 January 2020",
-            "score": 0.6666666666666666
-        },
-        {
-            "id":"2",
-            "news": "aa news bau lambo che me jate banayo che. test karva. barabar chale che ke nai? chalse ne aavu? lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
-            "authenticity": true, 
-            "dateAdded": "20 March 2012",
-            "score": 0.6666666666666666
-        }
-    ])
+    const[result, setResult] = useState([])
     const[isRefreshing, setIsRefreshing] = useState(false)
 
     const getData = async() => {
-        var response = await fetch('https://fakenewsdetectorapi.herokuapp.com/?news='+route.params.query)  
+        let data = {
+            method: 'POST',
+            body:'news='+route.params.query,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        var response = await fetch('https://fakenewsdetectorapi.herokuapp.com',data)
         var json = await response.json()
         await setResult(json)
-        //console.log(json)
         setIsRefreshing(false)
     }
 
     const _handleRefresh = async () => {
-        //await setIsRefreshing(true)
-        //getData()
+        await setIsRefreshing(true)
+        getData()
     }
 
     const _handlePress = (item) => {
@@ -48,8 +32,7 @@ const ResultsScreen = ({route, navigation}) => {
     }
 
     useEffect(()=> {
-        //setResult([])
-        //getData();
+        getData();
     },[])
 
     return (
