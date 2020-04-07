@@ -10,7 +10,7 @@ import {
     Keyboard,
 } from 'react-native'
 import { Icon } from 'react-native-elements'
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler'
 import Toast from 'react-native-tiny-toast'
 
 const HomeScreen = ({navigation}) => {
@@ -91,7 +91,13 @@ const HomeScreen = ({navigation}) => {
         {
             keyBoardVisible?
                 null:
-                <TouchableOpacity style={styles.searchButton} onPress={() => navigation.navigate('ResultsScreen', {query: copiedText})}>
+                <TouchableOpacity style={styles.searchButton} onPress={() => {
+                    if(copiedText.trim()===""){
+                        Toast.show("Nothing to search!!!")
+                    } else {
+                        navigation.navigate('ResultsScreen', {query: copiedText})
+                    }
+                }}>
                     <Icon
                         name="search"
                         type="material"

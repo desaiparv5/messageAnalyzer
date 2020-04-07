@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
 import NewsCard from '../components/NewsCard'
-import EmptyList from '../components/EmptyList'
+import EndOfList from "../components/EndOfList";
+import Toast from 'react-native-tiny-toast'
 
 const ResultsScreen = ({route, navigation}) => {
 
     const[query, setQuery] = useState('')
     const[result, setResult] = useState([])
-
-    const[language, setLanguage] = useState('')
-    const[fetching, setFetching] = useState(false)
-    const[detectLanguage, setDetectLanguage] = useState(true)
-    const[translating, setTranslating] = useState(false)
     const[isRefreshing, setIsRefreshing] = useState(false)
     const[isLoading, setIsLoading] = useState(true)
+    const[endList, setEndList] = useState(false)
 
     const getData = async() => {
         let data = {
@@ -26,7 +23,7 @@ const ResultsScreen = ({route, navigation}) => {
         var response = await fetch('https://fakenewsdetectorapi.herokuapp.com',data)
         var json = await response.json()
         await setResult(json)
-        setIsRefreshing(false)
+        await setIsRefreshing(false)
         await setIsLoading(false)
     }
 
@@ -37,6 +34,13 @@ const ResultsScreen = ({route, navigation}) => {
 
     const _handlePress = (item) => {
         navigation.navigate('ResultDetailedScreen', {news: item})
+    }
+
+    const _handleEndListPress = async() => {
+        //fetch("Koik api ne call kari ne post ma routes.params.query pass karvani")
+        console.log('Send this for further processing')
+        setEndList(true)
+        Toast.show("Sent")
     }
 
     useEffect(()=> {
@@ -58,10 +62,11 @@ const ResultsScreen = ({route, navigation}) => {
                 onRefresh = {()=>{_handleRefresh()}}
                 keyExtractor={item => item.id}
                 data = {result}
-                renderItem = {(item, index, separators)=>{
-                    return (<NewsCard key={index} onPress={()=>_handlePress(item.item)} item={item.item} />)
+                renderItem = {({item, index, separators})=>{
+                    return (<NewsCard key={index} onPress={()=>_handlePress(item)} item={item} />)
                 }}
-                ListEmptyComponent={<EmptyList />}
+                //ListEmptyComponent={<EmptyList />}
+                ListFooterComponent={endList?null:<EndOfList press={()=>{_handleEndListPress()}}/>}
             />
         }
     </View>
@@ -77,6 +82,7 @@ const styles = StyleSheet.create({
     listContainer: {
         width: "100%",
         flex: 1,
+        marginTop: 5,
     },
 })
 

@@ -2,13 +2,16 @@
 import {
     SafeAreaView,
     StyleSheet,
-    Button,
+    View,
 } from 'react-native'
+import { Icon } from "react-native-elements";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen'
 import ResultsScreen from './screens/ResultsScreen'
 import ResultDetailedScreen from './screens/ResultDetailedScreen'
+import ContributionScreen from './screens/ContributionScreen'
+import ShowNews from './screens/ShowNews'
 
 const Stack = createStackNavigator();
 
@@ -20,14 +23,24 @@ const App = () => {
                     <Stack.Screen 
                         name="Home" 
                         component={HomeScreen}
-                        options={
-                            {
-                                title: 'Home',
-                                headerStyle: {
-                                    backgroundColor: '#273469',
-                                },
-                                headerTintColor: '#EBF2FA',
-                            }
+                        options={({ navigation }) => ({
+                            title: 'Home',
+                            headerStyle: {
+                                backgroundColor: '#273469',
+                            },
+                            headerTintColor: '#EBF2FA',
+                            headerRight: () => (
+                                <View style={{marginRight: 8}}>
+                                    <Icon
+                                        onPress={() => navigation.navigate('ContributionScreen')}
+                                        name="group"
+                                        type="material"
+                                        color="#EBF2FA"
+                                        raises={true}
+                                    />
+                                </View>
+                            ),
+                          })
                         }
                     />
                     <Stack.Screen 
@@ -49,6 +62,32 @@ const App = () => {
                         options={
                             {
                                 title: 'Result',
+                                headerStyle: {
+                                    backgroundColor: '#273469',
+                                },
+                                headerTintColor: '#EBF2FA',
+                            }
+                        }
+                    />
+                    <Stack.Screen 
+                        name="ContributionScreen"
+                        component={ContributionScreen}
+                        options={
+                            {
+                                title: 'Contribute',
+                                headerStyle: {
+                                    backgroundColor: '#273469',
+                                },
+                                headerTintColor: '#EBF2FA',
+                            }
+                        }
+                    />
+                    <Stack.Screen 
+                        name="ShowNews"
+                        component={ShowNews}
+                        options={
+                            {
+                                title: 'Contribute',
                                 headerStyle: {
                                     backgroundColor: '#273469',
                                 },

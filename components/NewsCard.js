@@ -4,20 +4,18 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const NewsCard = (props) => {
 
-    useEffect(()=>{
-        //console.log(props)
-    },[])
-
     const styles = StyleSheet.create({
         container: {
             width: "98%",
             height: 50,
-            backgroundColor: props.item.authenticity?"red":"green",
+            backgroundColor: props.item.authenticity?'rgba(236,36,21,0.5)':"rgba(49,158,50,0.5)",
             marginBottom: 5,
             alignSelf: "center",
+            borderRadius: 5,
         },
         text:{
             paddingHorizontal: 5,
+            fontSize: 18,
         },
     })
 
