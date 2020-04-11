@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 const ResultDetailedScreen = ({route, navigation}) => {
 
@@ -10,11 +10,39 @@ const ResultDetailedScreen = ({route, navigation}) => {
     },[])
 
     return(
-        <View>
-            <Text>{newsItem.news}</Text>
-            <Text>First seen on date: {newsItem.dateAdded}</Text>
-            <Text>Fake che? {newsItem.authenticity?"Haa fake che":"Naa fake nathi"}</Text>
+        <View style={styles.container}>
+            <View style={styles.fakeContainer}>
+                <Text style={[styles.fakeTextStyles, {color: newsItem.authenticity?"green":"red"}]}>{newsItem.authenticity?"Real":"Fake"}</Text>
+            </View>
+            <View style={styles.dateContainer}>
+                <Text style={styles.textStyles}>Recorded on date: {newsItem.date}</Text>
+            </View>
+            <View style={styles.newsContainer}>
+                <Text style={styles.textStyles}>News:</Text>
+                <Text style={styles.textStyles}>{newsItem.news}</Text>
+            </View>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    newsContainer: {
+        borderWidth: 1,
+        borderColor: 'gray'
+    },
+    dateContainer: {},
+    fakeContainer:{},
+    textStyles: {
+        fontSize: 16,
+    },
+    container: {
+        paddingTop: 5,
+        paddingHorizontal: 10,
+    },
+    fakeTextStyles: {
+        fontWeight: 'bold',
+        fontSize: 30
+    },
+})
+
 export default ResultDetailedScreen

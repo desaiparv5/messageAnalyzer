@@ -7,18 +7,10 @@ const ContributionScreen = ({navigation}) => {
     const [languageList, setLanguageList] = useState([])
 
     const getLanguages = async() => {
-        await setLanguageList([
-            {"key":"en", "language":"English"},
-            {"key":"gu", "language":"ગુજરાતી"},
-            {"key":"hi", "language":"हिन्दी"},
-            {"key":"es", "language":"Española"},
-            {"key":"kn", "language":"ಕನ್ನಡ"},
-            {"key":"ma", "language":"मराठी"},
-            {"key":"ch", "language":"中文"},
-            {"key":"ml", "language":"മലയാളം"},
-            {"key":"pj", "language":"ਪੰਜਾਬੀ"},
-            {"key":"tl", "language":"தமிழ்"},
-        ])
+        var response = await fetch('https://fakenewsdetectorapi.herokuapp.com/getlangs')
+        var json = await response.json()
+        console.log(json)
+        await setLanguageList(json)
     }
 
     useEffect(()=>{

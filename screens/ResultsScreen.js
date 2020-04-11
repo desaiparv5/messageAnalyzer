@@ -6,7 +6,7 @@ import Toast from 'react-native-tiny-toast'
 
 const ResultsScreen = ({route, navigation}) => {
 
-    const[query, setQuery] = useState('')
+    const[query, setQuery] = useState(route.params.query)
     const[result, setResult] = useState([])
     const[isRefreshing, setIsRefreshing] = useState(false)
     const[isLoading, setIsLoading] = useState(true)
@@ -23,13 +23,13 @@ const ResultsScreen = ({route, navigation}) => {
         var response = await fetch('https://fakenewsdetectorapi.herokuapp.com',data)
         var json = await response.json()
         await setResult(json)
-        await setIsRefreshing(false)
         await setIsLoading(false)
     }
 
     const _handleRefresh = async () => {
         await setIsRefreshing(true)
         getData()
+        await setIsRefreshing(false)
     }
 
     const _handlePress = (item) => {
@@ -44,12 +44,8 @@ const ResultsScreen = ({route, navigation}) => {
     }
 
     useEffect(()=> {
-        setQuery(route.params.query)
-    },[])
-
-    useEffect(()=>{
         getData()
-    },[query])
+    },[])
 
     return (
     <View style={styles.container}>
