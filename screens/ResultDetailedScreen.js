@@ -11,9 +11,9 @@ const ResultDetailedScreen = ({route, navigation}) => {
 
     return(
         <View style={styles.container}>
-            <View style={styles.fakeContainer}>
+            {/* <View style={styles.fakeContainer}>
                 <Text style={[styles.fakeTextStyles, {color: newsItem.authenticity?"green":"red"}]}>{newsItem.authenticity?"Real":"Fake"}</Text>
-            </View>
+            </View> */}
             <View style={styles.dateContainer}>
                 <Text style={styles.textStyles}>Recorded on date: {newsItem.date}</Text>
             </View>
