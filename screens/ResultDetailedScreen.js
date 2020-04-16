@@ -54,8 +54,8 @@ const VoteBar = (props) => {
                 borderWidth={0}
             />
             <View style={styles.counter}>
-                <Text>{props.item.real}(real)</Text>
-                <Text>(fake){props.item.fake}</Text>
+                <Text style={{color: "white", opacity:0.9}}>{props.item.real}(real)</Text>
+                <Text style={{color: "white", opacity:0.9}}>(fake){props.item.fake}</Text>
             </View>
         </View>
     </View>
