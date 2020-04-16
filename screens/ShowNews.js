@@ -15,7 +15,7 @@ const ShowNews = ({route, navigation}) => {
     const[isLoading, setIsLoading] = useState(true)
 
     const getNews = async() => {
-        const response = await fetch('https://fakenewsdetectorapi.herokuapp.com/getnews?language='+route.params.key)
+        const response = await fetch('https://fakenewsdetectorapi.herokuapp.com/getnews?language='+language)
         const json = await response.json()
         await setNews(json)
         await setIsLoading(false)
@@ -24,6 +24,19 @@ const ShowNews = ({route, navigation}) => {
     useEffect(()=>{
         getNews()
     },[])
+
+    const submitNews = async(vote) => {
+        setIsLoading(true)
+        const response = await fetch('https://fakenewsdetectorapi.herokuapp.com/vote?id='+news.id+'&vote='+vote)
+        const json = await response.json()
+        console.log(json.vote)
+        if(json.vote==="success"){
+            await getNews()
+        }else{
+            Toast.show("Error")
+            setIsLoading(false)
+        }
+    }
 
     return(
         <View style={styles.container}>
@@ -34,6 +47,7 @@ const ShowNews = ({route, navigation}) => {
                 isLoading?
                 <ActivityIndicator 
                     color="#273469"
+                    size="large"
                     style={{alignSelf: "center", justifyContent: "center"}}
                 />:
                 <ScrollView>
@@ -42,13 +56,13 @@ const ShowNews = ({route, navigation}) => {
             }
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                    onPress={()=>{console.log('real')}}
+                    onPress={()=>{submitNews('real')}}
                     style={[styles.button,{backgroundColor: "green"}]}
                 >
                     <Text style={{fontWeight: "bold", color: "white"}}>Real</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={()=>{console.log('fake')}}
+                    onPress={()=>{submitNews('fake')}}
                     style={[styles.button,{backgroundColor: "red"}]}
                 >
                     <Text style={{fontWeight: "bold", color: "white"}}>Fake</Text>
@@ -61,6 +75,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 5,
+        justifyContent: "space-between"
     },
     buttonContainer: {
         flexDirection: "row",

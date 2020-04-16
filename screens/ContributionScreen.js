@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, FlatList, Text } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { 
+    View, 
+    StyleSheet, 
+    FlatList, 
+    Text, 
+    TouchableOpacity,
+    ActivityIndicator
+ } from 'react-native'
 
 const ContributionScreen = ({navigation}) => {
 
     const [languageList, setLanguageList] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     const getLanguages = async() => {
         var response = await fetch('https://fakenewsdetectorapi.herokuapp.com/getlangs')
         var json = await response.json()
         await setLanguageList(json)
+        await setIsLoading(false)
     }
 
     useEffect(()=>{
@@ -17,6 +25,8 @@ const ContributionScreen = ({navigation}) => {
     },[])
 
     return(
+        isLoading?
+        <ActivityIndicator size="large" />:
         <View style={styles.container}>
             <Text style={{paddingLeft: 5,fontSize: 24, paddingVertical: 15, color: '#064789', fontWeight: "bold", borderBottomWidth: 1}}>
                 Choose your language
