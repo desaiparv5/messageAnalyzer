@@ -9,7 +9,6 @@ const ContributionScreen = ({navigation}) => {
     const getLanguages = async() => {
         var response = await fetch('https://fakenewsdetectorapi.herokuapp.com/getlangs')
         var json = await response.json()
-        console.log(json)
         await setLanguageList(json)
     }
 

@@ -8,7 +8,6 @@ const NewsCard = (props) => {
     const[newsItem,setNewsItem] = useState(props.item)
 
     useEffect(()=>{
-        console.log(props.item)
     },[])
 
     return(

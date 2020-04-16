@@ -1,36 +1,73 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import * as Progress from 'react-native-progress';
 
 const ResultDetailedScreen = ({route, navigation}) => {
 
-    const[newsItem, setNewsItem] = useState({})
+    const[newsItem, setNewsItem] = useState(route.params.news)
 
     useEffect(()=>{
-        setNewsItem(route.params.news)
     },[])
 
     return(
         <View style={styles.container}>
-            {/* <View style={styles.fakeContainer}>
+            {newsItem.authenticity==null?
+            <VoteBar item={newsItem} />:
+            <View style={styles.fakeContainer}>
                 <Text style={[styles.fakeTextStyles, {color: newsItem.authenticity?"green":"red"}]}>{newsItem.authenticity?"Real":"Fake"}</Text>
-            </View> */}
+            </View>
+            }
             <View style={styles.dateContainer}>
-                <Text style={styles.textStyles}>Recorded on date: {newsItem.date}</Text>
+                <Text style={[styles.textStyles, {color: "#273469", fontWeight: "bold"}]}>Recorded on date: </Text> 
+                <Text>{newsItem.date}</Text>
             </View>
             <View style={styles.newsContainer}>
-                <Text style={styles.textStyles}>News:</Text>
-                <Text style={styles.textStyles}>{newsItem.news}</Text>
+                <Text style={[styles.textStyles, {fontSize: 20, color: "#273469", fontWeight: "bold"}]}>
+                    News
+                </Text>
+                <ScrollView style={{}}>
+                    <Text style={[styles.textStyles, {textAlign: "justify"}]}>{newsItem.news}</Text>
+                </ScrollView>
             </View>
         </View>
     )
 }
 
+const VoteBar = (props) => {
+    return(
+    <View>
+        <View>
+            <Text>Note: This is not confirmed by any of the authority</Text>
+        </View>
+        <View>
+            <Text style={{color: "#273469", fontWeight: "bold"}}>Public opinion</Text>
+        </View>
+        <View style={{marginTop: 5}}>
+            <Progress.Bar
+                progress={props.item.real/(props.item.real+props.item.fake)} 
+                width={null}
+                color="green"
+                unfilledColor="red"
+                height={20}
+                borderRadius={0}
+                borderColor="black"
+                borderWidth={0}
+            />
+            <View style={styles.counter}>
+                <Text>{props.item.real}(real)</Text>
+                <Text>(fake){props.item.fake}</Text>
+            </View>
+        </View>
+    </View>
+    )
+}
+
 const styles = StyleSheet.create({
     newsContainer: {
-        borderWidth: 1,
-        borderColor: 'gray'
     },
-    dateContainer: {},
+    dateContainer: {
+        flexDirection: "row"
+    },
     fakeContainer:{},
     textStyles: {
         fontSize: 16,
@@ -42,6 +79,12 @@ const styles = StyleSheet.create({
     fakeTextStyles: {
         fontWeight: 'bold',
         fontSize: 30
+    },
+    counter:{
+        position: "absolute",
+        width: "100%",
+        flexDirection: "row", 
+        justifyContent: "space-between"
     },
 })
 
