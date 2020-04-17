@@ -38,6 +38,11 @@ const ShowNews = ({route, navigation}) => {
         }
     }
 
+    const _handlePass = async () => {
+        await setIsLoading(true)
+        getNews()
+    }
+
     return(
         <View style={styles.container}>
             <View>
@@ -62,6 +67,12 @@ const ShowNews = ({route, navigation}) => {
                     <Text style={{fontWeight: "bold", color: "white"}}>Real</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={()=>{_handlePass()}}
+                    style={[styles.button,{backgroundColor: "gray"}]}
+                >
+                    <Text style={{fontWeight: "bold", color: "white"}}>Pass</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                     onPress={()=>{submitNews('fake')}}
                     style={[styles.button,{backgroundColor: "red"}]}
                 >
@@ -81,10 +92,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-evenly",
         marginBottom: 5,
+        width: '100%',
     },
     button:{
         height: 30,
-        width: 150,
+        width: '30%',
         alignItems: "center",
         justifyContent: "center"
     },

@@ -72,7 +72,7 @@ const HomeScreen = ({navigation}) => {
                             setTextInput("")
                             Toast.show("Please enter keywords")
                         } else {
-                            navigation.navigate('ResultsScreen', {query: textInput.trim()})}
+                            navigation.navigate('ResultsScreen', {query: textInput.trim(), keywords: true})}
                         }
                     }>
                     <Icon
@@ -95,7 +95,7 @@ const HomeScreen = ({navigation}) => {
                     if(copiedText.trim()===""){
                         Toast.show("Nothing to search!!!")
                     } else {
-                        navigation.navigate('ResultsScreen', {query: copiedText})
+                        navigation.navigate('ResultsScreen', {query: copiedText, keywords: false})
                     }
                 }}>
                     <Icon

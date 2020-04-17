@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { FlatList, View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import NewsCard from '../components/NewsCard'
 import EndOfList from "../components/EndOfList";
 import Toast from 'react-native-tiny-toast'
@@ -41,6 +41,7 @@ const ResultsScreen = ({route, navigation}) => {
         console.log('Send this for further processing')
         setEndList(true)
         Toast.show("Sent")
+        navigation.goBack()
     }
 
     useEffect(()=> {
@@ -61,12 +62,20 @@ const ResultsScreen = ({route, navigation}) => {
                 renderItem = {({item, index, separators})=>{
                     return (<NewsCard key={index} onPress={()=>_handlePress(item)} item={item} />)
                 }}
-                //ListEmptyComponent={<EmptyList />}
-                ListFooterComponent={endList?null:<EndOfList press={()=>{_handleEndListPress()}}/>}
+                ListEmptyComponent={route.params.keywords?<EmptyList />:null}
+                ListFooterComponent={route.params.keywords?null:(endList?null:<EndOfList press={()=>{_handleEndListPress()}}/>)}
             />
         }
     </View>
     );
+}
+
+const EmptyList = () => {
+    return(
+        <View style={styles.container}>
+            <Text>No results found. Try again with another keywords</Text>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
