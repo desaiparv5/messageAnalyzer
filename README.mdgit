@@ -1,0 +1,1 @@
+"# messageAnalyzer"  initgit add README.mdgit commit -m "first commit"git remote add origin https://github.com/desaiparv5/messageAnalyzer.gitgit push -u origin master                
