@@ -39,7 +39,7 @@ const ResultDetailedScreen = ({route, navigation}) => {
           ]}>
           News
         </Text>
-        <ScrollView style={{}}>
+        <ScrollView>
           <Text style={[styles.textStyles, {textAlign: 'justify'}]}>
             {newsItem.news}
           </Text>
@@ -85,7 +85,9 @@ const VoteBar = props => {
 };
 
 const styles = StyleSheet.create({
-  newsContainer: {},
+  newsContainer: {
+    flex: 1,
+  },
   dateContainer: {
     flexDirection: 'row',
   },
@@ -96,6 +98,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 5,
     paddingHorizontal: 10,
+    flex: 1,
   },
   fakeTextStyles: {
     fontWeight: 'bold',

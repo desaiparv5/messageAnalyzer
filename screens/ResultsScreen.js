@@ -48,7 +48,7 @@ const ResultsScreen = ({route, navigation}) => {
   const _handleEndListPress = async () => {
     let data = {
       method: 'POST',
-      body: 'news=' + route.params.query,
+      body: 'news=' + route.params.query.trim(),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
